@@ -79,7 +79,8 @@ jobs:
         if [ -z "$EXTENSION" ] || [ "$EXTENSION" == "layer7" ]; then        
         cd layer7/layer7-extension
         echo //registry.npmjs.org/:_authToken="${NODE_AUTH_TOKEN}" >> .npmrc
-        npm version "${GITHUB_REF##*/}" --no-git-tag-version 
+        echo "${GITHUB_REF##*/}"
+        npm version ${GITHUB_REF##*/} --no-git-tag-version 
         yarn && yarn build
         npm publish  --tag latest --access public      
         fi
