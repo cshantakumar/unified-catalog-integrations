@@ -84,4 +84,6 @@ jobs:
         yarn && yarn build
         npm publish  --tag latest --access public      
         fi
-        
+       env:
+        NODE_AUTH_TOKEN: ${{ secrets.NPM_EXTERNAL_AUTH_TOKEN }}
+        NPM_TOKEN: ${{ secrets.NPM_EXTERNAL_AUTH_TOKEN }}
