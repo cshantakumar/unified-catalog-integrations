@@ -6,7 +6,7 @@ jobs:
   build:
     runs-on: ubuntu-latest
     env:
-      NODE_AUTH_TOKEN: ${{ secrets.NPM_EXTERNAL_AUTH_TOKEN }}    
+      NPM_TOKEN: ${{ secrets.NPM_EXTERNAL_AUTH_TOKEN }}
     steps:
      - uses: actions/checkout@v2
      - uses: actions/setup-node@v1
@@ -78,12 +78,10 @@ jobs:
         export EXTENSION=$(echo "${GITHUB_REF##*/}" | awk -F'_' '{print $2}')
         if [ -z "$EXTENSION" ] || [ "$EXTENSION" == "layer7" ]; then        
         cd layer7/layer7-extension
-        echo //registry.npmjs.org/:_authToken="${NODE_AUTH_TOKEN}" >> .npmrc
+        echo //registry.npmjs.org/:_authToken="${NPM_TOKEN}" >> .npmrc
         export VERSION=$(echo "${GITHUB_REF##*/}" | awk -F'_' '{print $1}')
         npm version "$VERSION" --no-git-tag-version 
         yarn && yarn build
         npm publish  --tag latest --access public      
         fi
-       env:
-        NODE_AUTH_TOKEN: ${{ secrets.NPM_EXTERNAL_AUTH_TOKEN }}
-        NPM_TOKEN: ${{ secrets.NPM_EXTERNAL_AUTH_TOKEN }}
+        
